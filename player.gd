@@ -5,8 +5,14 @@ signal hit
 @export var speed = 400
 var screen_size
 
+func start(pos):
+	position = pos
+	show()
+	$CollisionShape2D.disabled = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	hide()
 	screen_size = get_viewport_rect().size
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -25,12 +31,12 @@ func _process(delta):
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * speed
 
-	update_move_animation(velocity)
+	_update_move_animation(velocity)
 
 	position += velocity * delta
 	position = position.clamp(Vector2.ZERO, screen_size)
 
-func update_move_animation(velocity):
+func _update_move_animation(velocity):
 	if velocity.length() > 0:
 		$AnimatedSprite2D.play()
 	else:
@@ -44,3 +50,8 @@ func update_move_animation(velocity):
 		$AnimatedSprite2D.animation = "up"
 		$AnimatedSprite2D.flip_v = velocity.y > 0
 		$AnimatedSprite2D.flip_h = false
+
+func _on_body_entered(_body):
+	hide()
+	hit.emit()
+	$CollisionShape2D.set_deferred("disabled", true)
