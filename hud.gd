@@ -26,11 +26,11 @@ func show_game_over():
 func update_score(score):
 	$ScoreLabel.text = str(score)
 
-func _on_game_start_button_button_down():
+func _on_message_timer_timeout():
+	$MessageLabel.hide()
+
+func _on_game_start_button_pressed():
 	$GameStartButton.hide()
 	$ScoreLabel.show()
 	$MessageLabel.hide()
 	start_game.emit()
-
-func _on_message_timer_timeout():
-	$MessageLabel.hide()
