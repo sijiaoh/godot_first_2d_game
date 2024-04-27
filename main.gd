@@ -13,11 +13,16 @@ func new_game():
 	$Player.start(position)
 	$StartDelayTimer.start()
 
+	$BackGroundBGM.play()
+
 func game_over():
 	$MobSpawnTimer.stop()
 	$ScoreCountTimer.stop()
 	$HUD.show_game_over()
 	get_tree().call_group("mobs", "queue_free")
+
+	$BackGroundBGM.stop()
+	$GameOverSE.play()
 
 func _on_mob_spawn_timer_timeout():
 	var mob = mob_scene.instantiate()
