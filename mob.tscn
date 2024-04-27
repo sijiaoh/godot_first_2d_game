@@ -58,7 +58,7 @@ metadata/_edit_group_ = true
 rotation = -1.5708
 scale = Vector2(0.75, 0.75)
 sprite_frames = SubResource("SpriteFrames_fti8o")
-animation = &"walk"
+animation = &"fly"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_1k82f")
