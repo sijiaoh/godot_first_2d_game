@@ -6,6 +6,9 @@ var score
 
 func new_game():
 	score = 0
+	$HUD.update_score(score)
+	$HUD.show_message("Get Ready!")
+
 	var position = $PlayerSpawnPosition.position
 	$Player.start(position)
 	$StartDelayTimer.start()
@@ -13,9 +16,8 @@ func new_game():
 func game_over():
 	$MobSpawnTimer.stop()
 	$ScoreCountTimer.stop()
-
-func _ready():
-	new_game()
+	$HUD.show_game_over()
+	get_tree().call_group("mobs", "queue_free")
 
 func _on_mob_spawn_timer_timeout():
 	var mob = mob_scene.instantiate()
@@ -35,7 +37,14 @@ func _on_mob_spawn_timer_timeout():
 
 func _on_score_count_timer_timeout():
 	score += 100
+	$HUD.update_score(score)
 
 func _on_start_delay_timer_timeout():
 	$MobSpawnTimer.start()
 	$ScoreCountTimer.start()
+
+func _on_hud_start_game():
+	new_game()
+
+func _on_player_hit():
+	game_over()
