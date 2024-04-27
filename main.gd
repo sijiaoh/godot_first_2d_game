@@ -26,9 +26,9 @@ func _on_mob_spawn_timer_timeout():
 
 	mob.position = location.position
 
-	var direction = location.rotation
+	var direction = location.rotation + PI / 2
 	direction += randf_range( - PI / 4, PI / 4)
-	mob.rotation = direction
+	mob.rotation = direction + PI / 2
 
 	var velocity = Vector2(randf_range(150, 250), 0)
 	mob.linear_velocity = velocity.rotated(direction)
